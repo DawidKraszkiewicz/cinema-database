@@ -1,14 +1,9 @@
-const Pool = require('pg').Pool;
-const pool = new Pool({
-    user: 'postgres',
-    host: 'localhost',
-    database: 'cinema',
-    password: 'kraszka19741',
-    port: 5432,
-})
+
+const pool = require('../../DBcredentials/DBcredentials.js')
+
 
 const getActors = (request, response) =>{
-    pool.query('SELECT * FROM actor'), (error, results) =>{
+    pool.query('SELECT * FROM actor'), (err, results) =>{
         if(err){
             throw err;
         }

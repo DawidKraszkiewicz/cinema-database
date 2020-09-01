@@ -1,13 +1,6 @@
 
 
-const Pool = require('pg').Pool;
-const pool = new Pool({
-    user: 'postgres',
-    host: 'localhost',
-    database: 'cinema',
-    password: 'kraszka19741',
-    port: 5432,
-})
+const pool = require('../../DBcredentials/DBcredentials')
 const getFilms = (request, response) => {
     pool.query('SELECT * FROM film', (error, results)=>
     {
