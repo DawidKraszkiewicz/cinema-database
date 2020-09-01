@@ -1,8 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const app = express();
-const db = require('./queries');
+const router = require('./Controllers/filmController/filmRouter.js', './Controllers/actorController/actorRouter.js')
 
+const app = express();
 const port = 3000;
 app.use(bodyParser.json());
 app.use(
@@ -10,14 +10,7 @@ app.use(
         extended: true
     })
 );
-app.get('/', (request, response) => {
-    response.json({info: 'working'})
-})
-app.get('/film', db.getFilms);
-app.get('/film/:id', db.getFilmById);
-app.post('/film', db.createFilm);
-app.put('/film/:id', db.updateFilm)
-app.delete('/film/:id', db.deleteFilmById)
+app.use(router)
 app.listen(port, ()=>{
     console.log(`app running on port ${port} `)
 })
