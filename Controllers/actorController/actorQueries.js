@@ -2,13 +2,13 @@
 const pool = require('../../DBcredentials/DBcredentials.js')
 
 
-const getActors = (request, response) =>{
-    pool.query('SELECT * FROM actor'), (err, results) =>{
-        if(err){
-            throw err;
+const getActors = (request, response) => {
+    pool.query('SELECT * FROM actor', (error, results) =>{
+        if(error){
+            throw error;
         }
         response.status(200).json(results.rows)
-    }
+    })
 
 }
 
