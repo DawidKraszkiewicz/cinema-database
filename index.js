@@ -1,10 +1,11 @@
+var path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const filmRouter = require('./Controllers/filmController/filmRouter')
 const actorRouter = require('./Controllers/actorController/actorRouter')
 const app = express();
 const port = 3000;
-
+const dir = path.join(__dirname, '/images')
 app.use(bodyParser.json());
 app.use(
     bodyParser.urlencoded({
@@ -30,9 +31,10 @@ app.use(function (req, res, next) {
     // Pass to next layer of middleware
     next();
 });
+app.use('/images', express.static(dir))
 app.use(actorRouter, filmRouter)
 
-  
+ 
 app.listen(port, ()=>{
     console.log(`app running on port ${port} `)
 })
