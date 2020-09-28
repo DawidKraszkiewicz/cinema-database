@@ -1,10 +1,12 @@
 var path = require('path');
+const cors = require('cors');
 const express = require('express');
 const bodyParser = require('body-parser');
 const filmRouter = require('./Controllers/filmController/filmRouter')
 const actorRouter = require('./Controllers/actorController/actorRouter')
+const bookingRouter = require('./Controllers/bookingController/bookRouter')
 const app = express();
-const port = 3000;
+const PORT = process.env.PORT || 3000;
 const dir = path.join(__dirname, '/images')
 app.use(bodyParser.json());
 app.use(
@@ -13,29 +15,17 @@ app.use(
     })
 );
 // Add headers
-app.use(function (req, res, next) {
-
-    // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
-
-    // Request methods you wish to allow
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-
-    // Request headers you wish to allow
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-
-    // Set to true if you need the website to include cookies in the requests sent
-    // to the API (e.g. in case you use sessions)
-    res.setHeader('Access-Control-Allow-Credentials', true);
-
-    // Pass to next layer of middleware
-    next();
-});
+var corsOptions = {
+    origin: "http://localhost:4200"
+  };
+  
+app.use(cors(corsOptions));
+  
 app.use('/images', express.static(dir))
-app.use(actorRouter, filmRouter)
+app.use(actorRouter, filmRouter, bookingRouter)
 
  
-app.listen(port, ()=>{
-    console.log(`app running on port ${port} `)
+app.listen(PORT, ()=>{
+    console.log(`app running on port ${PORT} `)
 })
 

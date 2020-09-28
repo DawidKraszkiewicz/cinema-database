@@ -13,10 +13,10 @@ const getFilms = (request, response) => {
 const getFilmById = (request, response)=>{
     const id = parseInt(request.params.id)
 
-    pool.query('SELECT * FROM film WHERE id = $1', [id], (error, results) =>{
+    pool.query('SELECT film.*,film_dates.* FROM film JOIN film_dates ON film.id = film_dates.film_id WHERE film.id = $1', [id], (error, results) =>{
         if(error){
-            console.log(results);
-            return response.send("an error occured");
+            console.log(id)
+            throw error
         }
         response.status(200).json(results.rows)
     })
